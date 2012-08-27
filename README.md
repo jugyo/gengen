@@ -10,19 +10,19 @@ A simple generator using github repository.
 
 From github:
 
-    gengen user/template [dirctory] [foo=bar ...]
+    $ gengen user/template [dirctory] [foo=bar ...]
 
 ↓
 
-    gengen jugyo/sublime-plugin RubyUtils name=RubyUtils command=test
+    $ gengen jugyo/sublime-plugin RubyUtils name=RubyUtils command=test
 
 From local git repository:
 
-    gengen --local(-l) git_repository_path [dirctory] [foo=bar ...]
+    $ gengen --local(-l) git_repository_path [dirctory] [foo=bar ...]
 
 ↓
 
-    gengen -l /path/to/sublime-plugin RubyUtils name=RubyUtils command=test
+    $ gengen -l /path/to/sublime-plugin RubyUtils name=RubyUtils command=test
 
 ## Creating Template
 
