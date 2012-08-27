@@ -26,7 +26,7 @@ module GenGen
 
       dest_dir = args[1] || File.basename(git_url).sub('.gengen', '').sub('.git', '')
       if File.exists?(dest_dir)
-        abort "'#{dest_dir}' already exists"
+        abort "[error] '#{dest_dir}' already exists"
       end
 
       temp_dir = fetch(git_url)
@@ -61,9 +61,12 @@ Examples:
     def fetch(git_url)
       temp_dir = Dir.mktmpdir
       puts "git clone #{git_url} ..."
-      system 'git', 'clone', git_url, temp_dir
-      FileUtils.rm_rf(File.join(temp_dir, '.git'))
-      temp_dir
+      if system 'git', 'clone', git_url, temp_dir
+        FileUtils.rm_rf(File.join(temp_dir, '.git'))
+        temp_dir
+      else
+        abort "[error] faild to git clone '#{git_url}'!"
+      end
     end
 
     def process(dir, vars)
