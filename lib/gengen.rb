@@ -13,7 +13,7 @@ module GenGen
       puts "options: #{options.inspect}"
 
       github_project = args[0]
-      unless github_project && github_project =~ /^\w+\/\w+$/
+      unless github_project && github_project =~ /^[^\/]+\/[^\/]+$/
         abort "Usage: gengen user/template dirctory [foo=bar ...]"
       end
 
