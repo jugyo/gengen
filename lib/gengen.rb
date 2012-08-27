@@ -10,18 +10,41 @@ module GenGen
     def gen(args)
       args = args.dup
       options = extract_otpions!(args)
-      puts "options: #{options.inspect}"
 
-      github_project = args[0]
-      unless github_project && github_project =~ /^[^\/]+\/[^\/]+$/
-        abort "Usage: gengen user/template dirctory [foo=bar ...]"
+      local = true if args.delete('-l') || args.delete('--local')
+
+      if local
+        git_url = args[0]
+      else
+        github_project = args[0]
+        unless github_project && github_project =~ /^[^\/]+\/[^\/]+$/
+          usage!
+        end
+        github_project += '.gengen' unless github_project =~ /\.gengen$/
+        git_url = "git@github.com:#{github_project}.git"
       end
 
-      temp_dir = fetch_from_github(github_project)
+      dest_dir = args[1] || File.basename(git_url).sub('.gengen', '').sub('.git', '')
+      if File.exists?(dest_dir)
+        abort "'#{dest_dir}' already exists"
+      end
+
+      temp_dir = fetch(git_url)
       process(temp_dir, options)
 
-      dest_dir = args[1] || github_project.split('/')[1]
       FileUtils.mv(temp_dir, dest_dir)
+    end
+
+    def usage!
+      abort <<-D
+Usage:
+  gengen user/template [dirctory] [foo=bar ...]
+  gengen --local(-l) git_repository_path [dirctory] [foo=bar ...]
+
+Examples:
+  gengen jugyo/sublime-plugin RubyUtils name=RubyUtils command=test
+  gengen -l /path/to/sublime-plugin RubyUtils name=RubyUtils command=test
+      D
     end
 
     def extract_otpions!(args)
@@ -35,9 +58,9 @@ module GenGen
       options
     end
 
-    def fetch_from_github(github_project)
+    def fetch(git_url)
       temp_dir = Dir.mktmpdir
-      git_url = "git@github.com:#{github_project}.git"
+      puts "git clone #{git_url} ..."
       system 'git', 'clone', git_url, temp_dir
       FileUtils.rm_rf(File.join(temp_dir, '.git'))
       temp_dir
@@ -75,7 +98,7 @@ module GenGen
         unless vars.key?(var_name)
           print "[#{var_name}]: "
           value = STDIN.gets.strip
-          vars[var_name] = value
+          vars[var_name] = value.empty? ? var_name : value
         end
         vars[var_name]
       end

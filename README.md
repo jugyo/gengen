@@ -8,17 +8,21 @@ A simple generator using github repository.
 
 ## Usage
 
-Basic:
+From github:
 
-    $ gengen user/project
+    gengen user/template [dirctory] [foo=bar ...]
 
-Specify directory:
+↓
 
-    $ gengen user/project directory
+    gengen jugyo/sublime-plugin RubyUtils name=RubyUtils command=test
 
-Specify the values for template:
+From local git repository:
 
-    $ gengen user/project directory name=foo
+    gengen --local(-l) git_repository_path [dirctory] [foo=bar ...]
+
+↓
+
+    gengen -l /path/to/sublime-plugin RubyUtils name=RubyUtils command=test
 
 ## Contributing
 

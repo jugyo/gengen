@@ -3,6 +3,22 @@ require 'tmpdir'
 require 'fileutils'
 
 describe GenGen do
+  describe ".gen" do
+    it 'works with github repository' do
+      mock(GenGen).fetch('git@github.com:foo/bar.gengen.git') { '/tmp/baz' }
+      mock(GenGen).process('/tmp/baz', {'a' => 'b', 'c' => 'd'})
+      mock(FileUtils).mv('/tmp/baz', 'baz')
+      GenGen.gen(%w(foo/bar baz a=b c=d))
+    end
+
+    it 'works with local repository' do
+      mock(GenGen).fetch('/foo/bar') { '/tmp/baz' }
+      mock(GenGen).process('/tmp/baz', {'a' => 'b', 'c' => 'd'})
+      mock(FileUtils).mv('/tmp/baz', 'baz')
+      GenGen.gen(%w(-l /foo/bar baz a=b c=d))
+    end
+  end
+
   describe ".extract_otpions" do
     it "works" do
       args = ['foo/bar', 'bar', 'a=b', 'c=d']
