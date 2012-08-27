@@ -5,7 +5,7 @@ require 'fileutils'
 describe GenGen do
   describe ".gen" do
     it 'works with github repository' do
-      mock(GenGen).fetch('git@github.com:foo/bar.gengen.git') { '/tmp/baz' }
+      mock(GenGen).fetch('https://github.com/foo/bar.gengen.git') { '/tmp/baz' }
       mock(GenGen).process('/tmp/baz', {'a' => 'b', 'c' => 'd'})
       mock(FileUtils).mv('/tmp/baz', 'baz')
       GenGen.gen(%w(foo/bar baz a=b c=d))

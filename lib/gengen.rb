@@ -21,7 +21,7 @@ module GenGen
           usage!
         end
         github_project += '.gengen' unless github_project =~ /\.gengen$/
-        git_url = "git@github.com:#{github_project}.git"
+        git_url = "https://github.com/#{github_project}.git"
       end
 
       dest_dir = args[1] || File.basename(git_url).sub('.gengen', '').sub('.git', '')
