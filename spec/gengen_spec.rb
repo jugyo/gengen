@@ -24,7 +24,7 @@ describe GenGen do
     end
 
     it "works" do
-      mock(GenGen).gets { "BAZ\n" }
+      mock(STDIN).gets { "BAZ\n" }
 
       GenGen.process(tmpdir, 'var1' => 'FOO', 'var2' => 'BAR')
 

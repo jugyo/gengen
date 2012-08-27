@@ -74,7 +74,7 @@ module GenGen
         var_name = $1
         unless vars.key?(var_name)
           print "[#{var_name}]: "
-          value = gets.strip
+          value = STDIN.gets.strip
           vars[var_name] = value
         end
         vars[var_name]
