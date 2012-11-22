@@ -24,7 +24,13 @@ module GenGen
         git_url = "https://github.com/#{github_project}.git"
       end
 
-      dest_dir = args[1] || File.basename(git_url).sub('.gengen', '').sub('.git', '')
+      dest_dir = if args[1]
+          args[1]
+        else
+          print "[directory]: "
+          STDIN.gets.strip
+        end
+
       if File.exists?(dest_dir)
         abort "[error] '#{dest_dir}' already exists"
       end
