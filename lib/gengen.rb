@@ -44,8 +44,8 @@ module GenGen
     def usage!
       abort <<-D
 Usage:
-  gengen user/template [dirctory] [foo=bar ...]
-  gengen --local(-l) git_repository_path [dirctory] [foo=bar ...]
+  gengen user/template [directory] [foo=bar ...]
+  gengen --local(-l) git_repository_path [directory] [foo=bar ...]
 
 Examples:
   gengen jugyo/sublime-plugin RubyUtils name=RubyUtils command=test

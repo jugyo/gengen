@@ -10,7 +10,7 @@ A simple generator using github repository.
 
 From github:
 
-    $ gengen user/template [dirctory] [foo=bar ...]
+    $ gengen user/template [directory] [foo=bar ...]
 
 ↓
 
@@ -18,7 +18,7 @@ From github:
 
 From local git repository:
 
-    $ gengen --local(-l) git_repository_path [dirctory] [foo=bar ...]
+    $ gengen --local(-l) git_repository_path [directory] [foo=bar ...]
 
 ↓
 
